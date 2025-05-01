@@ -1,4 +1,9 @@
 ########################################
+# Global line ending policy
+########################################
+* text=auto eol=lf
+
+########################################
 # Unity YAML merge configuration
 ########################################
 *.unity      merge=unityyamlmerge eol=lf
@@ -8,7 +13,7 @@
 *.controller merge=unityyamlmerge eol=lf
 
 ########################################
-# Text files (force Unix-style line endings)
+# Text files (LF endings enforced)
 ########################################
 *.cs     text eol=lf
 *.shader text eol=lf
@@ -20,9 +25,10 @@
 *.uxml   text eol=lf
 *.uss    text eol=lf
 *.yaml   text eol=lf
+*.meta   text eol=lf
 
 ########################################
-# Binary files (no diff/merge)
+# Binary files (excluded from diff/merge)
 ########################################
 *.dll    binary
 *.exe    binary
