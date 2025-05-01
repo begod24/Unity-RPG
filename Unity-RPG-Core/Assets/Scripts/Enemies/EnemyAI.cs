@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -7,59 +8,90 @@ public class EnemyAI : MonoBehaviour
 
     public Transform[] patrolPoints;
     private int patrolIndex = 0;
+
     public Transform player;
     public float chaseDistance = 10f;
     public float attackDistance = 1f;
+
     public float speed = 2f;
 
-    private void Update()
+    private NavMeshAgent agent;
+
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = speed;
+        SetState(State.Patrolling);
+    }
+
+    void Update()
     {
         float distance = Vector3.Distance(transform.position, player.position);
+
         switch (currentState)
         {
             case State.Patrolling:
-                Patrol();
-                if (distance < chaseDistance)
+                if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                    GoToNextPoint();
+
+                if (distance < chaseDistance && CanSeePlayer())
                     SetState(State.Chasing);
                 break;
 
             case State.Chasing:
-                Chase();
+                agent.SetDestination(player.position);
+
                 if (distance < attackDistance)
                     SetState(State.Attacking);
-                else if (distance > chaseDistance)
+                else if (distance > chaseDistance || !CanSeePlayer())
                     SetState(State.Patrolling);
                 break;
 
             case State.Attacking:
-                Attack();
+                Debug.Log($"{name}: АТАКУЕТ игрока!");
                 if (distance > attackDistance)
                     SetState(State.Chasing);
                 break;
         }
     }
 
-    private void SetState(State newState)
+    void SetState(State state)
     {
-        currentState = newState;
+        if (currentState == state) return;
+
+        currentState = state;
+
+        switch (state)
+        {
+            case State.Patrolling:
+                Debug.Log($"<color=gray>{name}: Переход в режим ПАТРУЛИРОВАНИЯ</color>");
+                GoToNextPoint();
+                break;
+            case State.Chasing:
+                Debug.Log($"<color=yellow>{name}: УВИДЕЛ игрока — ПРЕСЛЕДОВАНИЕ!</color>");
+                break;
+            case State.Attacking:
+                Debug.Log($"<color=red>{name}: АТАКУЕТ игрока!</color>");
+                break;
+        }
     }
 
-    private void Patrol()
+    void GoToNextPoint()
     {
-        Transform target = patrolPoints[patrolIndex];
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, target.position) < 0.5f)
-            patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
+        if (patrolPoints.Length == 0) return;
+        agent.SetDestination(patrolPoints[patrolIndex].position);
+        patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
     }
 
-    private void Chase()
+    bool CanSeePlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-    }
-
-    private void Attack()
-    {
-        Debug.Log("Атака игрока!");
+        Vector3 dirToPlayer = player.position - transform.position;
+        Ray ray = new Ray(transform.position + Vector3.up * 1.5f, dirToPlayer.normalized);
+        if (Physics.Raycast(ray, out RaycastHit hit, chaseDistance))
+        {
+            Debug.DrawRay(transform.position + Vector3.up * 1.5f, dirToPlayer.normalized * chaseDistance, Color.red);
+            return hit.transform == player;
+        }
+        return false;
     }
 }
