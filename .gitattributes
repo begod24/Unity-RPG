@@ -1,32 +1,43 @@
-# Unity
-*.mat merge=unityyamlmerge eol=lf
-*.anim merge=unityyamlmerge eol=lf
-*.unity merge=unityyamlmerge eol=lf
-*.prefab merge=unityyamlmerge eol=lf
-*.physicsMaterial2D merge=unityyamlmerge eol=lf
-*.physicMaterial merge=unityyamlmerge eol=lf
-*.meta merge=unityyamlmerge eol=lf
+########################################
+# Unity YAML merge configuration
+########################################
+*.unity      merge=unityyamlmerge eol=lf
+*.prefab     merge=unityyamlmerge eol=lf
+*.asset      merge=unityyamlmerge eol=lf
+*.mat        merge=unityyamlmerge eol=lf
 *.controller merge=unityyamlmerge eol=lf
 
-# Image
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.jpeg filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text
-*.gif filter=lfs diff=lfs merge=lfs -text
-*.psd filter=lfs diff=lfs merge=lfs -text
-*.ai filter=lfs diff=lfs merge=lfs -text
-*.tif filter=lfs diff=lfs merge=lfs -text
+########################################
+# Text files (force Unix-style line endings)
+########################################
+*.cs     text eol=lf
+*.shader text eol=lf
+*.txt    text eol=lf
+*.json   text eol=lf
+*.xml    text eol=lf
+*.asmdef text eol=lf
+*.rsp    text eol=lf
+*.uxml   text eol=lf
+*.uss    text eol=lf
+*.yaml   text eol=lf
 
-# Audio
-*.mp3 filter=lfs diff=lfs merge=lfs -text
-*.wav filter=lfs diff=lfs merge=lfs -text
-*.ogg filter=lfs diff=lfs merge=lfs -text
-
-# Video
-*.mp4 filter=lfs diff=lfs merge=lfs -text
-*.mov filter=lfs diff=lfs merge=lfs
-
-# 3D Object
-*.fbx filter=lfs diff=lfs merge=lfs -text
-*.blend filter=lfs diff=lfs merge=lfs -text
-*.obj filter=lfs diff=lfs merge=lfs
+########################################
+# Binary files (no diff/merge)
+########################################
+*.dll    binary
+*.exe    binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.tga    binary
+*.tif    binary
+*.tiff   binary
+*.mp3    binary
+*.ogg    binary
+*.wav    binary
+*.fbx    binary
+*.anim   binary
+*.mp4    binary
+*.mov    binary
+*.webm   binary
+*.blend  binary
