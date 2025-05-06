@@ -1,27 +1,43 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
-    public float jumpHeight = 2f;
-    public float gravity = -9.81f;
-
-    public Transform cameraTransform;
-    public float mouseSensitivity = 100f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private Transform cameraTransform;
 
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
-    private float xRotation = 0f;
 
-    void Start()
+    private PlayerInputActions inputActions;
+    private Vector2 moveInput;
+    private bool jumpInput;
+
+    private float xRotation = 0f;
+    [SerializeField] private float mouseSensitivity = 2f;
+
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
+        inputActions = new PlayerInputActions();
+
+        inputActions.Gameplay.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        inputActions.Gameplay.Move.canceled += _ => moveInput = Vector2.zero;
+
+        inputActions.Gameplay.Jump.performed += _ => jumpInput = true;
+        inputActions.Gameplay.Jump.canceled += _ => jumpInput = false;
+
+        inputActions.Gameplay.Look.performed += ctx => Look(ctx.ReadValue<Vector2>());
     }
 
-    void Update()
+    private void OnEnable() => inputActions.Enable();
+    private void OnDisable() => inputActions.Disable();
+
+    private void Update()
     {
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
@@ -29,23 +45,22 @@ public class PlayerController : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+        controller.Move(move * moveSpeed * Time.deltaTime);
 
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (jumpInput && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
 
-        // Mouse Look
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+    private void Look(Vector2 lookInput)
+    {
+        float mouseX = lookInput.x * mouseSensitivity;
+        float mouseY = lookInput.y * mouseSensitivity;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);

@@ -1,19 +1,19 @@
 using UnityEngine;
 
-public class Bow : Weapon
+public class Bow : MonoBehaviour, IWeapon
 {
-    public int ammo = 10;
+    [SerializeField] private int ammo = 5;
 
-    public override void Attack()
+    public void Attack()
     {
         if (ammo > 0)
         {
-            Debug.Log("Выстрел из лука!");
+            Debug.Log("Bow shot!");
             ammo--;
         }
         else
         {
-            Debug.Log("Нет стрел!");
+            Debug.Log("No ammo!");
         }
     }
 }

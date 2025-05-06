@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class Sword : Weapon
+public class Sword : MonoBehaviour, IWeapon
 {
-    public override void Attack()
+    [SerializeField] private float damage = 10f;
+
+    public void Attack()
     {
-        Debug.Log("Мах мечом!");
+        Debug.Log("Sword attack! Damage: " + damage);
     }
 }
