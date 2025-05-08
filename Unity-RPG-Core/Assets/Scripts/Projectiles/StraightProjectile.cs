@@ -4,6 +4,6 @@ public class StraightProjectile : Projectile
 {
     protected override void Move()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * Time.deltaTime * 10f); // Можно убрать 10f, если хочешь использовать из базового
     }
 }

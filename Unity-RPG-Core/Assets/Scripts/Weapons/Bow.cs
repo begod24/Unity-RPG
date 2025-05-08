@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class Bow : MonoBehaviour, IWeapon
 {
+    [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private Transform firePoint;
     [SerializeField] private int ammo = 5;
 
     public void Attack()
     {
-        if (ammo > 0)
+        if (ammo <= 0)
         {
-            Debug.Log("Bow shot!");
-            ammo--;
+            Debug.Log("Out of ammo!");
+            return;
         }
-        else
-        {
-            Debug.Log("No ammo!");
-        }
+
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
+        arrow.SetActive(true);
+
+        Debug.Log("Shot an arrow!");
+        ammo--;
     }
 }

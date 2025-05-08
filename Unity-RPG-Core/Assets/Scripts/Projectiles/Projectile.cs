@@ -2,24 +2,26 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
-    [SerializeField] protected float speed;
-    [SerializeField] protected float damage;
+    [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 5f;
 
-    protected virtual void OnEnable()
+    private float timer;
+
+    private void OnEnable()
     {
-        Invoke(nameof(Disable), lifeTime);
+        timer = 0f;
     }
 
-    protected virtual void Update()
+    private void Update()
     {
         Move();
+
+        timer += Time.deltaTime;
+        if (timer >= lifeTime)
+        {
+            gameObject.SetActive(false); // Отключаем (object pooling)
+        }
     }
 
     protected abstract void Move();
-
-    private void Disable()
-    {
-        gameObject.SetActive(false);
-    }
 }
