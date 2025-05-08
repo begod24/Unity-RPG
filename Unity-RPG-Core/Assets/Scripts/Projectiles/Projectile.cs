@@ -19,7 +19,7 @@ public abstract class Projectile : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= lifeTime)
         {
-            gameObject.SetActive(false); // Отключаем (object pooling)
+            gameObject.SetActive(false); 
         }
     }
 
