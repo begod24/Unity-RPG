@@ -542,6 +542,11 @@ GameObject:
   - component: {fileID: 243567662}
   - component: {fileID: 243567661}
   - component: {fileID: 243567660}
+  - component: {fileID: 243567668}
+  - component: {fileID: 243567667}
+  - component: {fileID: 243567666}
+  - component: {fileID: 243567665}
+  - component: {fileID: 243567664}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -665,6 +670,70 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243567657}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &243567664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243567657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3421168290e74034d9cac4f953b6ac4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 553262463}
+  playerBody: {fileID: 243567658}
+  sensitivity: 2
+--- !u!114 &243567665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243567657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d172a34eca666459784c05d28aa503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &243567666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243567657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdeb40836ea35946b1944e08002ebda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+--- !u!114 &243567667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243567657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcd3e031fc8400429e6ecc0356274fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &243567668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243567657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2179f174db5a047bb98a0c0bef0aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &337696288
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +829,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: a5e0348d5d9d73c47aaac5ea358d1584, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: a6e4604b0208f47a698a3061146150cf, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &387986993
 GameObject:
@@ -816,9 +885,9 @@ MonoBehaviour:
   - {fileID: 1266217809}
   - {fileID: 1662757077}
   player: {fileID: 243567658}
-  chaseDistance: 12
-  attackDistance: 4
-  speed: 4
+  chaseDistance: 25
+  attackDistance: 2
+  speed: 7
 --- !u!136 &387986996
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1119,8 +1188,8 @@ MonoBehaviour:
   - {fileID: 1266217809}
   - {fileID: 1662757077}
   player: {fileID: 243567658}
-  chaseDistance: 20
-  attackDistance: 1
+  chaseDistance: 25
+  attackDistance: 2
   speed: 7
 --- !u!136 &458143225
 CapsuleCollider:
@@ -2403,6 +2472,7 @@ Transform:
   - {fileID: 1399978204}
   - {fileID: 458143223}
   - {fileID: 387986994}
+  - {fileID: 1546351214}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &747820560
@@ -3638,8 +3708,8 @@ MonoBehaviour:
   - {fileID: 1266217809}
   - {fileID: 1662757077}
   player: {fileID: 243567658}
-  chaseDistance: 20
-  attackDistance: 1
+  chaseDistance: 25
+  attackDistance: 2
   speed: 7
 --- !u!136 &1399978206
 CapsuleCollider:
@@ -3790,15 +3860,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546351213}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 32.134502, y: 22.20904, z: -28.671038}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 788320638}
   - {fileID: 1266217809}
   - {fileID: 1662757077}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 700671702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1639369134
 GameObject:
@@ -3854,8 +3924,8 @@ MonoBehaviour:
   - {fileID: 1266217809}
   - {fileID: 1662757077}
   player: {fileID: 243567658}
-  chaseDistance: 20
-  attackDistance: 1
+  chaseDistance: 25
+  attackDistance: 2
   speed: 7
 --- !u!136 &1639369137
 CapsuleCollider:
@@ -4300,8 +4370,8 @@ MonoBehaviour:
   - {fileID: 1266217809}
   - {fileID: 1662757077}
   player: {fileID: 243567658}
-  chaseDistance: 20
-  attackDistance: 1
+  chaseDistance: 25
+  attackDistance: 2
   speed: 7
 --- !u!136 &2008148506
 CapsuleCollider:
@@ -4882,4 +4952,3 @@ SceneRoots:
   - {fileID: 94123321}
   - {fileID: 337696289}
   - {fileID: 700671702}
-  - {fileID: 1546351214}
