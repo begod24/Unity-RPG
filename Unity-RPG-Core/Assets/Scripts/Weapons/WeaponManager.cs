@@ -1,50 +1,34 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : SingletonBehaviour<WeaponManager>
 {
-    [SerializeField] private GameObject[] weaponObjects;
-
-    private IWeapon currentWeapon;
-    private int currentIndex = 0;
-
-    private PlayerInputActions inputActions;
-
-    private void Awake()
-    {
-        inputActions = new PlayerInputActions();
-
-        inputActions.Gameplay.Fire.performed += _ => currentWeapon?.Attack();
-        inputActions.Gameplay.SwitchWeapon.performed += _ => SwitchWeapon();
-    }
-
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
+    [SerializeField] private GameObject[] weapons;
+    private int current = 0;
+    public event Action<IWeapon> OnWeaponChanged;
+    private IWeapon weapon;
 
     private void Start()
     {
-        EquipWeapon(0);
+        Equip(0);
     }
 
-    private void SwitchWeapon()
+    public void SwitchWeapon()
     {
-        currentIndex = (currentIndex + 1) % weaponObjects.Length;
-        EquipWeapon(currentIndex);
+        Equip((current + 1) % weapons.Length);
     }
 
-    private void EquipWeapon(int index)
+    public void Fire()
     {
-        for (int i = 0; i < weaponObjects.Length; i++)
-            weaponObjects[i].SetActive(i == index);
+        weapon?.Attack();
+    }
 
-        currentWeapon = weaponObjects[index].GetComponent<IWeapon>();
-        Debug.Log("Selected Weapon: " + weaponObjects[index].name);
+    private void Equip(int index)
+    {
+        for(int i=0; i<weapons.Length; i++)
+            weapons[i].SetActive(i==index);
+        current = index;
+        weapon = weapons[index].GetComponent<IWeapon>();
+        OnWeaponChanged?.Invoke(weapon);
     }
 }

@@ -1,9 +1,6 @@
 using UnityEngine;
 
-public class StraightProjectile : Projectile
+public class StraightProjectile : ProjectileBase
 {
-    protected override void Move()
-    {
-        transform.Translate(Vector3.forward * Time.deltaTime * 10f);
-    }
+    protected override void Move() => transform.Translate(Vector3.forward * speed * Time.deltaTime);
 }
